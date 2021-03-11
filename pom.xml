@@ -7,13 +7,85 @@
     <artifactId>spring-petclinic</artifactId>
     <version>2.2.0.BUILD-SNAPSHOT</version>
 
+<developers>
+        <developer> 
+            <id>Ignnavbla</id>
+            <name>Ignacio Navarro Blazquez</name>
+            <email>ignnavbla@alum.us.es</email>
+            <url>ignacionavarro.eu</url>
+            <organization>XLStudios </organization>
+            <organizationUrl>xlstudios.eu</organizationUrl>
+            <roles>
+                <role>Student</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>Madrid</timezone>
+        </developer>
+        <developer>
+            <id>josdomqui</id>
+            <name>Jose Antonio Dominguez Quinta</name>
+            <email>josdomqui@alum.us.es</email>
+            <url>https://github.com/josdomqui</url>
+            <organization>XLStudios </organization>
+            <organizationUrl>xlstudios.eu</organizationUrl>
+            <roles>
+                <role>Student</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>Madrid</timezone>
+
+        </developer>
+        <developer>
+            <id>javvilmay</id>
+            <name>Javier Vilariño Mayo</name>
+            <email>javvilmay@alum.us.es</email>
+            <url>https://github.com/javivm17</url>
+            <organization>XLStudios </organization>
+            <organizationUrl>xlstudios.eu</organizationUrl>
+            <roles>
+                <role>Student</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>Madrid</timezone>
+
+        </developer>
+        <developer>
+            <id>jesrivgal</id>
+            <name>Jesus Antonio Rivero Gallardo</name>
+            <email>jesrivgal@alum.us.es</email>
+            <url>https://github.com/Jesus-RG</url>
+            <organization>XLStudios </organization>
+            <organizationUrl>xlstudios.eu</organizationUrl>
+            <roles>
+                <role>Student</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>Madrid</timezone>
+
+        </developer>
+        <developer>
+            <id>antsolismir</id>
+            <name>Antonio Manuel Solis Miranda</name>
+            <email>antsolmir@alum.us.es</email>
+            <url>https://github.com/antsolismir</url>
+            <organization>XLStudios </organization>
+            <organizationUrl>xlstudios.eu</organizationUrl>
+            <roles>
+                <role>Student</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>Madrid</timezone>
+
+        </developer>
+    </developers>
+
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
     </parent>
     <name>petclinic</name>
-
     <properties>
 
         <!-- Generic properties -->
@@ -254,7 +326,5 @@
             <url>https://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
-
-
 
 </project>
