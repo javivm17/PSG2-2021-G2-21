@@ -78,6 +78,20 @@
             <timezone>Madrid</timezone>
 
         </developer>
+         <developer>
+            <id>Antonio-Gonzalez-Gomez</id>
+            <name>Antonio Gonzalez Gomez</name>
+            <email>antgongom4@alum.us.es</email>
+            <url>https://github.com/Antonio-Gonzalez-Gomez</url>
+            <organization>XLStudios </organization>
+            <organizationUrl>xlstudios.eu</organizationUrl>
+            <roles>
+                <role>Student</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>Madrid</timezone>
+
+        </developer>
     </developers>
 
 
