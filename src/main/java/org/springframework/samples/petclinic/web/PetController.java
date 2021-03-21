@@ -34,6 +34,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
@@ -150,5 +151,19 @@ public class PetController {
 			return "redirect:/owners/{ownerId}";
 		}
 	}
+        
+        @RequestMapping(value = "/pets/{petId}/delete", method={RequestMethod.DELETE, RequestMethod.GET})
+    public String deletePet(@PathVariable("petId") final int petId){
+    	try {
+    		this.petService.deletePetById(petId);
+    		return "redirect:/owners/{ownerId}";
+    	}
+    	catch(final DataAccessException d) {
+    		return "redirect:/owners/{ownerId}";
+    	}
+    }
 
+
+        
+  
 }

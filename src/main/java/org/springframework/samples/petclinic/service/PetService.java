@@ -78,5 +78,10 @@ public class PetService {
 	public Collection<Visit> findVisitsByPetId(int petId) {
 		return visitRepository.findByPetId(petId);
 	}
+	
+	@Transactional
+	public void deletePetById(final int id) throws DataAccessException{
+		this.petRepository.deleteById(id);
+	}
 
 }
