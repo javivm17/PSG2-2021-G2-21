@@ -20,6 +20,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.PetService;
@@ -89,5 +91,16 @@ public class VisitController {
 		model.put("visits", this.petService.findPetById(petId).getVisits());
 		return "visitList";
 	}
+	
+	@RequestMapping(value = "/pets/{petId}/visits/delete", method={RequestMethod.DELETE, RequestMethod.GET})
+    public String deleteVisit( final Owner owner, @PathVariable("visitId") final int visitId){
+    	try {
+    		this.petService.deleteVisitById(visitId);
+    		return "redirect:/owners/{ownerId}";
+    	}
+    	catch(final DataAccessException d) {
+    		return "redirect:/oups";
+    	}
+    }
 
 }
