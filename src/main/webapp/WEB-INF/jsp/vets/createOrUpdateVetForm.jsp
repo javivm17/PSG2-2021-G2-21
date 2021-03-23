@@ -3,49 +3,37 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<petclinic:layout pageName="owners">
-    <jsp:attribute name="customScript">
-        <script>
-            $(function () {
-                $("#birthDate").datepicker({dateFormat: 'yy/mm/dd'});
-            });
-        </script>
-    </jsp:attribute>
-    <jsp:body>
-        <h2>
-            <c:if test="${pet['new']}">New </c:if> Pet
-        </h2>
-        <form:form modelAttribute="pet"
-                   class="form-horizontal">
-            <input type="hidden" name="id" value="${pet.id}"/>
-            <div class="form-group has-feedback">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Owner</label>
-                    <div class="col-sm-10">
-                        <c:out value="${pet.owner.firstName} ${pet.owner.lastName}"/>
-                    </div>
-                </div>
-                <petclinic:inputField label="Name" name="name"/>
-                <petclinic:inputField label="Birth Date" name="birthDate"/>
-                <div class="control-group">
-                    <petclinic:selectField name="type" label="Type " names="${types}" size="5"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <c:choose>
-                        <c:when test="${pet['new']}">
-                            <button class="btn btn-default" type="submit">Add Pet</button>
-                        </c:when>
-                        <c:otherwise>
-                            <button class="btn btn-default" type="submit">Update Pet</button>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-        </form:form>
-        <c:if test="${!pet['new']}">
-        </c:if>
-    </jsp:body>
+<petclinic:layout pageName="vets">
+	<h2>
+    	Actualizar Veterinario
+    </h2>
+    <h3>
+    	<c:out value="${vet.firstName} ${vet.lastName}"/>
+    </h3>
+    <c:out value="Especialidades que posee:"/><br/>
+    <c:forEach items="${vet.specialties}" var="vetSpecialty">
+		<c:out value="${vetSpecialty.name}"/>				
+        <spring:url value="/vets/{vetId}/delete/{specId}" var="deleteUrl">
+			<spring:param name="vetId" value="${vet.id}"/>
+			<spring:param name="specId" value="${vetSpecialty.id}"/>
+		</spring:url>
+		<a href="${fn:escapeXml(deleteUrl)}" class="">&#10060;</a>	
+		<br/>	
+	</c:forEach>
+	<c:if test="${vet.nrOfSpecialties == 0}">Ninguno<br/></c:if>
+	<br/>
+	
+	<c:out value="Especialidades que no posee:"/><br/>
+	<c:forEach items="${haveNotSpec}" var="Nspecialty">
+		<c:out value="${Nspecialty.name}"/>
+		<spring:url value="/vets/{vetId}/add/{specId}" var="addUrl">
+			<spring:param name="vetId" value="${vet.id}"/>
+			<spring:param name="specId" value="${vetSpecialty.id}"/>
+		</spring:url>
+		<a href="${fn:escapeXml(addUrl)}" class="">&#10060;</a>
+		<br/>
+	</c:forEach>
+	<!-- <a href="../../vets" class="btn btn-default">Volver</a> -->
 </petclinic:layout>

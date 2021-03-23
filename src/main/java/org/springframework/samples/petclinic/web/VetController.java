@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -80,14 +81,14 @@ public class VetController {
 	@GetMapping(value = "/new")
 	public String initCreationForm(Vet vet, ModelMap model) {
 		model.put("vet", new Vet());
-		return FORM;
+		return "vets/vetNew";
 	}
 
 	@PostMapping(value = "/save")
 	public String processCreationForm(@Valid Vet vet, BindingResult result, ModelMap model) {		
 		if (result.hasErrors()) {
 			model.put("vet", vet);
-			return FORM;
+			return "vets/vetNew";
 		}
 		else {
 			vetService.save(vet);
@@ -107,25 +108,25 @@ public class VetController {
 		
 	}
 	
-	@PostMapping(value = "/{vetId}/add/{specId}")
+	@RequestMapping(value = "/{vetId}/add/{specId}", method={RequestMethod.PUT, RequestMethod.GET})
 	public String addSpecialties(@PathVariable("vetId") int vetId,
 			@PathVariable("specId") int specId, Map<String, Object> model) {
 		Vet vet = vetService.findVetById(vetId).get();
 		List<Specialty> specs = vetService.findSpecialties();
 		Specialty sp = EntityUtils.getById(specs, Specialty.class, specId);
-		vet.deleteSpecialty(sp);
+		vet.addSpecialty(sp);
 		model.put("vet", vet);
 		vetService.save(vet);
 		return "vets/vetDetails";
 	}
 	
-	@PostMapping(value = "/{vetId}/delete/{specId}")
+	@RequestMapping(value = "/{vetId}/delete/{specId}", method={RequestMethod.DELETE, RequestMethod.GET})
 	public String deleteSpecialties(@PathVariable("vetId") int vetId,
 			@PathVariable("specId") int specId, Map<String, Object> model) {
 		Vet vet = vetService.findVetById(vetId).get();
 		List<Specialty> specs = vetService.findSpecialties();
 		Specialty sp = EntityUtils.getById(specs, Specialty.class, specId);
-		vet.addSpecialty(sp);
+		vet.deleteSpecialty(sp);
 		model.put("vet", vet);
 		vetService.save(vet);
 		return "vets/vetDetails";
@@ -146,7 +147,7 @@ public class VetController {
 		}
 		else {
 			vetService.save(vet);
-			return "redirect:/vets";
+			return "vets";
 		}
 	}
 
