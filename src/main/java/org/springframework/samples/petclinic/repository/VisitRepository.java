@@ -41,7 +41,8 @@ public interface VisitRepository extends Repository<Visit, Integer> {
 	 * @see BaseEntity#isNew
 	 */
 	void save(Visit visit) throws DataAccessException;
-	void deleteById(int id) throws DataAccessException; 
+	
+	void delete(Visit visit) throws DataAccessException; 
 
 	List<Visit> findByPetId(Integer petId);
 
