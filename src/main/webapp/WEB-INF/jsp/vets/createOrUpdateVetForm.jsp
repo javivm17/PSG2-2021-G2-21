@@ -6,33 +6,33 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <petclinic:layout pageName="vets">
-	<h2>
+	<h1>
     	Actualizar Veterinario
-    </h2>
-    <h3>
+    </h1>
+    <h2>
     	<c:out value="${vet.firstName} ${vet.lastName}"/>
-    </h3>
-    <c:out value="Especialidades que posee:"/><br/>
+    </h2>
+    <h4>Especialidades que posee:</h4>
     <c:forEach items="${vet.specialties}" var="vetSpecialty">
 		<c:out value="${vetSpecialty.name}"/>				
         <spring:url value="/vets/{vetId}/delete/{specId}" var="deleteUrl">
 			<spring:param name="vetId" value="${vet.id}"/>
 			<spring:param name="specId" value="${vetSpecialty.id}"/>
 		</spring:url>
-		<a href="${fn:escapeXml(deleteUrl)}" class="">&#10060;</a>	
+		<a href="${fn:escapeXml(deleteUrl)}" style="padding-left: 25px;">&#10060;</a>	
 		<br/>	
 	</c:forEach>
 	<c:if test="${vet.nrOfSpecialties == 0}">Ninguna<br/></c:if>
 	<br/>
 	
-	<c:out value="Especialidades que no posee:"/><br/>
+	<h4>Especialidades que no posee:</h4>
 	<c:forEach items="${haveNotSpec}" var="Nspecialty">
 		<c:out value="${Nspecialty.name}"/>
 		<spring:url value="/vets/{vetId}/add/{specId}" var="addUrl">
 			<spring:param name="vetId" value="${vet.id}"/>
 			<spring:param name="specId" value="${Nspecialty.id}"/>
 		</spring:url>
-		<a href="${fn:escapeXml(addUrl)}" class="">&#9989;</a>
+		<a href="${fn:escapeXml(addUrl)}" style="padding-left: 25px;">&#9989;</a>
 		<br/>
 	</c:forEach>
 	<!-- <a href="../../vets" class="btn btn-default">Volver</a> -->

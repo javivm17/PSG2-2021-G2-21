@@ -42,7 +42,10 @@
     				</spring:url>
     				<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar</a>
     				<!-- Borrar -->
-                	<a class="btn btn-default">Borrar</a>
+    				<spring:url value="vets/{vetId}/delete" var="deleteUrl">
+        				<spring:param name="vetId" value="${vet.id}"/>
+    				</spring:url>
+    				<a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Borrar</a>
                 </td>
             </tr>
         </c:forEach>

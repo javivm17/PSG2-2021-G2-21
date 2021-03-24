@@ -60,6 +60,7 @@ public class VetService {
 		vetRep.save(vet);
 	}
 
+	@Transactional
 	public  void delete(Vet vet) { 
 		vetRep.delete(vet);
 	}

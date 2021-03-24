@@ -38,4 +38,6 @@ public interface VetRepository extends CrudRepository<Vet, Integer>{
 
 	@Query("SELECT DISTINCT s FROM Specialty s")
 	List<Specialty> findSpecialties() throws DataAccessException;
+	
+	void delete(Vet vet) throws DataAccessException;
 }

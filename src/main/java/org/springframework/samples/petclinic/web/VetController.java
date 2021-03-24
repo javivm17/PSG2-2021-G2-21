@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Vets;
@@ -143,4 +144,17 @@ public class VetController {
 		model.put("vet", vet);
 		return FORM;
 	}
+	
+	@RequestMapping(value = "/{vetId}/delete", method={RequestMethod.DELETE, RequestMethod.GET})
+    public String deleteVet(@PathVariable("vetId") final int vetId){
+        try {
+        	Vet vet = this.vetService.findVetById(vetId).get();
+            this.vetService.delete(vet);
+            return "redirect:/vets";
+        }
+        catch(final DataAccessException d) {
+            return "redirect:/oups";
+        }
+    }
+	
 }
