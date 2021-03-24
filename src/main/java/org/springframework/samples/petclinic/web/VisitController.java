@@ -15,12 +15,14 @@
  */
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.PetService;
@@ -96,8 +98,8 @@ public class VisitController {
 		return "visitList";
 	}
 	
-	@RequestMapping(value = "/pets/{petId}/visits/{visitId}/delete", method={RequestMethod.DELETE, RequestMethod.GET})
-    public String deleteVisit(@PathVariable("visitId") final Visit visit, @PathVariable("petId") final int petId){
+	@RequestMapping(value = "/owners/{ownerId}/pets/{petId}/visits/delete", method={RequestMethod.DELETE, RequestMethod.GET})
+    public String deleteVisit(final Owner owner,@Valid final Visit visit,  @PathVariable("petId") final int petId){
     	try {
     		this.petService.deleteVisit(visit);
     		return "redirect:/owners/{ownerId}";
