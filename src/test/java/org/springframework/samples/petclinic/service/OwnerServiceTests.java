@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Collection;
 
 import org.assertj.core.api.Assertions;
@@ -65,19 +67,19 @@ class OwnerServiceTests {
 	@Test
 	void shouldFindOwnersByLastName() {
 		Collection<Owner> owners = this.ownerService.findOwnerByLastName("Davis");
-		Assertions.assertThat(owners.size()).isEqualTo(2);
+		assertThat(owners.size()).isEqualTo(2);
 
 		owners = this.ownerService.findOwnerByLastName("Daviss");
-		Assertions.assertThat(owners.isEmpty()).isTrue();
+		assertThat(owners.isEmpty()).isTrue();
 	}
 
 	@Test
 	void shouldFindSingleOwnerWithPet() {
 		final Owner owner = this.ownerService.findOwnerById(1);
-		Assertions.assertThat(owner.getLastName()).startsWith("Franklin");
-		Assertions.assertThat(owner.getPets().size()).isEqualTo(1);
-		Assertions.assertThat(owner.getPets().get(0).getType()).isNotNull();
-		Assertions.assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("gato");
+		assertThat(owner.getLastName()).startsWith("Franklin");
+		assertThat(owner.getPets().size()).isEqualTo(1);
+		assertThat(owner.getPets().get(0).getType()).isNotNull();
+		assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("gato");
 	}
 
 	@Test
@@ -99,10 +101,10 @@ class OwnerServiceTests {
                 owner.setUser(user);                
                 
 		this.ownerService.saveOwner(owner);
-		Assertions.assertThat(owner.getId().longValue()).isNotEqualTo(0);
+		assertThat(owner.getId().longValue()).isNotEqualTo(0);
 
 		owners = this.ownerService.findOwnerByLastName("Schultz");
-		Assertions.assertThat(owners.size()).isEqualTo(found + 1);
+		assertThat(owners.size()).isEqualTo(found + 1);
 	}
 
 	@Test
@@ -117,7 +119,7 @@ class OwnerServiceTests {
 
 		// retrieving new name from database
 		owner = this.ownerService.findOwnerById(1);
-		Assertions.assertThat(owner.getLastName()).isEqualTo(newLastName);
+		assertThat(owner.getLastName()).isEqualTo(newLastName);
 	}
 
 	
@@ -132,10 +134,10 @@ class OwnerServiceTests {
 		this.ownerService.deleteOwner(owner);
 		
 		final Owner ownerdel = this.ownerService.findOwnerById(1);
-		Assertions.assertThat(ownerdel).isNull();
+		assertThat(ownerdel).isNull();
 		
 		owners = this.ownerService.findOwnerByLastName("Franklin");
-		Assertions.assertThat(owners.size()).isEqualTo(found - 1);
+		assertThat(owners.size()).isEqualTo(found - 1);
 		
 	}
 

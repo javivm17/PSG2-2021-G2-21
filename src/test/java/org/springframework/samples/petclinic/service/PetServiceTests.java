@@ -17,6 +17,9 @@ package org.springframework.samples.petclinic.service;
 
 
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.logging.Level;
@@ -77,8 +80,8 @@ class PetServiceTests {
 	@Test
 	void shouldFindPetWithCorrectId() {
 		final Pet pet7 = this.petService.findPetById(7);
-		org.assertj.core.api.Assertions.assertThat(pet7.getName()).startsWith("Samantha");
-		org.assertj.core.api.Assertions.assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
+		assertThat(pet7.getName()).startsWith("Samantha");
+		assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
 
 	}
 
@@ -87,9 +90,9 @@ class PetServiceTests {
 		final Collection<PetType> petTypes = this.petService.findPetTypes();
 
 		final PetType petType1 = EntityUtils.getById(petTypes, PetType.class, 1);
-		org.assertj.core.api.Assertions.assertThat(petType1.getName()).isEqualTo("gato");
+		assertThat(petType1.getName()).isEqualTo("gato");
 		final PetType petType4 = EntityUtils.getById(petTypes, PetType.class, 4);
-		org.assertj.core.api.Assertions.assertThat(petType4.getName()).isEqualTo("serpiente");
+		assertThat(petType4.getName()).isEqualTo("serpiente");
 	}
 
 	@Test
@@ -104,7 +107,7 @@ class PetServiceTests {
 		pet.setType(EntityUtils.getById(types, PetType.class, 2));
 		pet.setBirthDate(LocalDate.now());
 		owner6.addPet(pet);
-		org.assertj.core.api.Assertions.assertThat(owner6.getPets().size()).isEqualTo(found + 1);
+		assertThat(owner6.getPets().size()).isEqualTo(found + 1);
 
             try {
                 this.petService.savePet(pet);
@@ -114,9 +117,9 @@ class PetServiceTests {
 		this.ownerService.saveOwner(owner6);
 
 		owner6 = this.ownerService.findOwnerById(6);
-		org.assertj.core.api.Assertions.assertThat(owner6.getPets().size()).isEqualTo(found + 1);
+		assertThat(owner6.getPets().size()).isEqualTo(found + 1);
 		// checks that id has been generated
-		org.assertj.core.api.Assertions.assertThat(pet.getId()).isNotNull();
+		assertThat(pet.getId()).isNotNull();
 	}
 	
 	@Test
@@ -157,7 +160,7 @@ class PetServiceTests {
 		this.petService.savePet(pet7);
 
 		pet7 = this.petService.findPetById(7);
-		org.assertj.core.api.Assertions.assertThat(pet7.getName()).isEqualTo(newName);
+		assertThat(pet7.getName()).isEqualTo(newName);
 	}
 	
 	@Test
@@ -207,18 +210,18 @@ class PetServiceTests {
             }
 
 		pet7 = this.petService.findPetById(7);
-		org.assertj.core.api.Assertions.assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
-		org.assertj.core.api.Assertions.assertThat(visit.getId()).isNotNull();
+		assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
+		assertThat(visit.getId()).isNotNull();
 	}
 
 	@Test
 	void shouldFindVisitsByPetId() throws Exception {
 		final Collection<Visit> visits = this.petService.findVisitsByPetId(7);
-		org.assertj.core.api.Assertions.assertThat(visits.size()).isEqualTo(2);
+		assertThat(visits.size()).isEqualTo(2);
 		final Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
-		org.assertj.core.api.Assertions.assertThat(visitArr[0].getPet()).isNotNull();
-		org.assertj.core.api.Assertions.assertThat(visitArr[0].getDate()).isNotNull();
-		org.assertj.core.api.Assertions.assertThat(visitArr[0].getPet().getId()).isEqualTo(7);
+		assertThat(visitArr[0].getPet()).isNotNull();
+		assertThat(visitArr[0].getDate()).isNotNull();
+		assertThat(visitArr[0].getPet().getId()).isEqualTo(7);
 	}
 	
 	@Test
@@ -228,7 +231,7 @@ class PetServiceTests {
         this.petService.deletePetById(1);
 
         final Pet petDel = this.petService.findPetById(1);
-        org.assertj.core.api.Assertions.assertThat(petDel).isNull();
+        assertThat(petDel).isNull();
        
     }
 	
@@ -243,7 +246,7 @@ class PetServiceTests {
 		
 		
 		final int visitDel = this.petService.findVisitsByPetId(8).size();
-		org.assertj.core.api.Assertions.assertThat(visitDel).isEqualTo(found - 1);
+		assertThat(visitDel).isEqualTo(found - 1);
 	}
 	
  
