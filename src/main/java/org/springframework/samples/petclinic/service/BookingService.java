@@ -19,6 +19,11 @@ public class BookingService {
 		bookingRepository.save(booking);	
 	}
 	
+	public void deleteBooking(Integer id) {
+		bookingRepository.deleteById(id);
+		System.out.println("ESTOY PASANDO");
+	}
+	
 	
 	
 }
