@@ -17,29 +17,16 @@ package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.model.Authorities;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
-import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -88,26 +75,26 @@ class OwnerServiceTests {
 
 	@Test
 	void shouldFindSingleOwnerWithPet() {
-		Owner owner = this.ownerService.findOwnerById(1);
+		final Owner owner = this.ownerService.findOwnerById(1);
 		assertThat(owner.getLastName()).startsWith("Franklin");
 		assertThat(owner.getPets().size()).isEqualTo(1);
 		assertThat(owner.getPets().get(0).getType()).isNotNull();
-		assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("cat");
+		assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("gato");
 	}
 
 	@Test
 	@Transactional
 	public void shouldInsertOwner() {
 		Collection<Owner> owners = this.ownerService.findOwnerByLastName("Schultz");
-		int found = owners.size();
+		final int found = owners.size();
 
-		Owner owner = new Owner();
+		final Owner owner = new Owner();
 		owner.setFirstName("Sam");
 		owner.setLastName("Schultz");
 		owner.setAddress("4, Evans Street");
 		owner.setCity("Wollongong");
 		owner.setTelephone("4444444444");
-                User user=new User();
+                final User user=new User();
                 user.setUsername("Sam");
                 user.setPassword("supersecretpassword");
                 user.setEnabled(true);
@@ -124,8 +111,8 @@ class OwnerServiceTests {
 	@Transactional
 	void shouldUpdateOwner() {
 		Owner owner = this.ownerService.findOwnerById(1);
-		String oldLastName = owner.getLastName();
-		String newLastName = oldLastName + "X";
+		final String oldLastName = owner.getLastName();
+		final String newLastName = oldLastName + "X";
 
 		owner.setLastName(newLastName);
 		this.ownerService.saveOwner(owner);
@@ -135,5 +122,23 @@ class OwnerServiceTests {
 		assertThat(owner.getLastName()).isEqualTo(newLastName);
 	}
 
+	
+	@Test
+	@Transactional
+	void shouldDeleteOwner() {
+		Collection<Owner> owners = this.ownerService.findOwnerByLastName("Franklin");
+		final int found = owners.size();
+		
+		final Owner owner = this.ownerService.findOwnerById(1);
+		
+		this.ownerService.deleteOwner(owner);
+		
+		final Owner ownerdel = this.ownerService.findOwnerById(1);
+		assertThat(ownerdel).isNull();
+		
+		owners = this.ownerService.findOwnerByLastName("Franklin");
+		assertThat(owners.size()).isEqualTo(found - 1);
+		
+	}
 
 }
