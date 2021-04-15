@@ -62,6 +62,9 @@ public class Pet extends NamedEntity {
 	
 	@OneToMany(mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Booking> bookings;
+	
+	@Column(name = "adoption")
+	private Integer inAdoption;
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
@@ -116,7 +119,16 @@ public class Pet extends NamedEntity {
 	public void setBookings(Set<Booking> bookings) {
 		this.bookings = bookings;
 	}
+	
+	public void setInAdoption(Boolean bol) {
+		if(bol == true) this.inAdoption = 1;
+		else this.inAdoption = 0; 
+	}
 
+	public Boolean getInAdoption() {
+		if(this.inAdoption == 1) return true;
+		else return false; 
+	}
 	
 	
 }

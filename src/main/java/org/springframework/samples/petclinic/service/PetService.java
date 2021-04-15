@@ -15,10 +15,14 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Visit;
@@ -28,6 +32,8 @@ import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNam
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import ch.qos.logback.classic.Logger;
 
 /**
  * Mostly used as a facade for all Petclinic controllers Also a placeholder
@@ -88,5 +94,15 @@ public class PetService {
 	public void deletePetById(final int id) throws DataAccessException{
 		this.petRepository.deleteById(id);
 	}
-
+	
+	@Transactional(readOnly=true)
+	public List<Pet> findAdoptablePets(){
+		List<Pet> res = petRepository.findAdoptablePets();
+		return res;
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Owner> findOwners(){
+		return this.petRepository.allOwners();
+	}
 }

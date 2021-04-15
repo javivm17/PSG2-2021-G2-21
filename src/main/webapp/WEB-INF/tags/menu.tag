@@ -39,6 +39,12 @@
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Veterinarios</span>
 				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'adopt'}" url="/adoption/list"
+					title="pagina principal">
+					<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+					<span>Adoptar</span>
+				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
