@@ -161,7 +161,7 @@ public class OwnerController {
 		try {
 			final Owner owner = this.ownerService.findOwnerById(ownerId);
 			this.ownerService.deleteOwner(owner);
-			return "redirect:/owners";
+			return "redirect:/";
 		}
 		catch(final DataAccessException d) {
 			return "redirect:/oups";

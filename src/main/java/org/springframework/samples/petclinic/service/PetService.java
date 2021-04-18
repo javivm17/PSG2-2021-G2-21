@@ -22,10 +22,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.AdoptionApplications;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Visit;
+import org.springframework.samples.petclinic.repository.AdoptionRequestsRepository;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.samples.petclinic.repository.VisitRepository;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
@@ -48,12 +50,16 @@ public class PetService {
 	
 	private final VisitRepository visitRepository;
 	
+	private AdoptionRequestsRepository adoptionRequestsRepository;
+
+	
 
 	@Autowired
 	public PetService(final PetRepository petRepository,
-			final VisitRepository visitRepository) {
+			final VisitRepository visitRepository, AdoptionRequestsRepository adoptionRequestsRepository) {
 		this.petRepository = petRepository;
 		this.visitRepository = visitRepository;
+		this.adoptionRequestsRepository = adoptionRequestsRepository;
 	}
 
 	@Transactional(readOnly = true)
@@ -92,6 +98,11 @@ public class PetService {
 	
 	@Transactional
 	public void deletePetById(final int id) throws DataAccessException{
+		//Se deben borrar las requests asociadas 
+		List<AdoptionApplications>ls =adoptionRequestsRepository.findRequestsByPet(id);
+		for(AdoptionApplications a: ls) {
+			adoptionRequestsRepository.deleteById(a.getId());
+		}
 		this.petRepository.deleteById(id);
 	}
 	

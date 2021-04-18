@@ -57,4 +57,9 @@ public class AdoptionRequestService {
 		adoptionRequestsRepository.deleteById(id);
 	}
 
+
+	public List<AdoptionApplications> getRequestsByPet(int id) {
+		return adoptionRequestsRepository.findRequestsByPet(id);
+	}
+
 }

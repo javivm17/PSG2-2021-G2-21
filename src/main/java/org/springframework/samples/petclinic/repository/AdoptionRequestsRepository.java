@@ -16,5 +16,6 @@ public interface AdoptionRequestsRepository extends CrudRepository<AdoptionAppli
 	
 	@Query("select a from AdoptionApplications a where a.pet.id =:id")
 	List<AdoptionApplications> findRequestsByPet(Integer id);
+
 	
 }
