@@ -41,12 +41,10 @@
     </spring:url>
     <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Añadir nueva mascota</a>
     
-     <sec:authorize access="hasAuthority('admin')">
-	     <spring:url value="{ownerId}/delete" var="deleteUrl">
-	        <spring:param name="ownerId" value="${owner.id}"/>
-	    </spring:url>
-	    <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Borrar dueño</a>
-	</sec:authorize>
+     <spring:url value="{ownerId}/delete" var="deleteUrl">
+        <spring:param name="ownerId" value="${owner.id}"/>
+   	 </spring:url>
+   	 <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Borrar dueño</a>
 	
 	<sec:authorize access="hasAuthority('owner')">
 	    <a href="/adoption/requests" class="btn btn-default">Solicitudes de adopcion pendientes (<c:out value="${requests}"/>)</a>
