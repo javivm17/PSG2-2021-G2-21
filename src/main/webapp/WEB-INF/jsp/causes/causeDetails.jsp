@@ -5,29 +5,50 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<petclinic:layout pageName="vetDet">
-    <h2>Información del Veterinario</h2>
+<petclinic:layout pageName="causes">
+    <h1>Información de la causa</h1>
+    <h4>Nombre</h4>
+	<c:out value="${cause.name}"></c:out>
+
+    <h4>Descripción</h4>
+    <c:out value="${cause.description}"></c:out>
+    
+    <h4>Organización</h4>
+    <c:out value="${cause.organization}"></c:out>
+    <h4>Estado</h4>
+	<c:out value="${cause.closed ? 'Finalizada' : 'Abierta'}"></c:out> 
+    <h4>Estado de las donaciones</h4>
+    <progress id="donationbar" max="${cause.target}" value="${cause.donated}"></progress>
+    <br>
+    <spring:url value="{causeId}/donations/new" var="donateUrl">
+        				<spring:param name="causeId" value="${cause.id}"/>
+    				</spring:url>
+    				<a href="${fn:escapeXml(donateUrl)}" class="btn btn-default">Donar</a>
+    <br>
+    <br>
+    <h1>Información de las donaciones</h1>
     <table class="table table-striped">
     	<thead>
     	<tr>
-    		<th>Nombre y apellidos</th>
-    		<th>Especialidad</th>
-    		<th></th>
+    		<th>Fecha de la donación</th>
+    		<th>Cantidad</th>
+    		<th>Cliente</th>
     	</tr>
     	</thead>
     	<tbody>
+    		<c:forEach items="${donations}" var="donation">
     		<tr>
     			<td>
-    				<b><c:out value="${vet.firstName} ${vet.lastName}"/></b>
+    				<c:out value="${donation.date}"/>
     			</td>
     			<td>
-    			<c:forEach items="${vet.specialties}" var="vetSpecialty">
-					<c:out value="${vetSpecialty.name}"/>
-					<br/>
-    			</c:forEach>
-    			<c:if test="${vet.nrOfSpecialties == 0}">Ninguna</c:if>
+					<c:out value="${donation.amount}"/>
+    			</td>
+    			<td>
+    				<c:out value="${donation.owner.firstName} ${donation.owner.lastName}"/>
     			</td>
     		</tr>
+    		</c:forEach>
     	</tbody>
     </table>
 </petclinic:layout>

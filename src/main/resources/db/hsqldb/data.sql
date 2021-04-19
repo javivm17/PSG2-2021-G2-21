@@ -62,3 +62,6 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'castracion');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'esterilizacion');
 
+INSERT INTO causes(id,name,description, organization, closed, target, donated) VALUES(1,'rescate de kowalsky','Atrapado', 'Los pingus de madagascar', FALSE, 300, 50);
+
+INSERT INTO donations(id,donation_date,amount, cause_id, owner_id) VALUES(1,'2020-09-07', 50, 1,1)

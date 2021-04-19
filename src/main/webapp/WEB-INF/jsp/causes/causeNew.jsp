@@ -6,11 +6,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <petclinic:layout pageName="causes">
+<jsp:body>
 	<h2>
     	Nueva causa
     </h2>
-    <form:form modelAttribute="cause" class="form-horizontal" action="/causes/save">
-		<input type="hidden" name="id" value="${cause.id}"/>
+    <form:form modelAttribute="cause" class="form-horizontal">
 		<div class="form-group has-feedback">
 				<petclinic:inputField label="Nombre" name="name"/>
 				<petclinic:inputField label="Descripción" name="description"/>
@@ -19,8 +19,10 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
+				<input type="hidden" name="causeId" value="${cause.id}"/>
 				<button class="btn btn-default" type="submit">Añadir causa</button>
 			</div>
 		</div>
 	</form:form>
+	</jsp:body>
 </petclinic:layout>

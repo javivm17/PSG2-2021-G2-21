@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Donation;
 import org.springframework.samples.petclinic.repository.DonationRepository;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class DonationService {
 	//JUNTAR LOS DOS SERVICES???
 	private final DonationRepository donationRepository;

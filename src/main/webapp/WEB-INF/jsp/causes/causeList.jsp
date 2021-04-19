@@ -31,14 +31,14 @@
                 <td>
                 	<!-- Informacion -->
                 	<spring:url value="causes/{causeId}" var="infoUrl">
-        				<spring:param name="causeId" value="${cause.id}"/>
+        				<spring:param name="causeId" value="${cs.id}"/>
     				</spring:url>
-    				<a href="${fn:escapeXml(viewUrl)}" class="btn btn-default">Más información</a>
+    				<a href="${fn:escapeXml(infoUrl)}" class="btn btn-default">Más información</a>
                 	<!-- Añadir donacion -->
-                	<spring:url value="" var="donateUrl">
-        				<spring:param name="causeId" value="${cause.id}"/>
+                	<spring:url value="causes/{causeId}/donations/new" var="donateUrl">
+        				<spring:param name="causeId" value="${cs.id}"/>
     				</spring:url>
-    				<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Donar</a>
+    				<a href="${fn:escapeXml(donateUrl)}" class="btn btn-default">Donar</a>
                 </td>
             </tr>
         </c:forEach>

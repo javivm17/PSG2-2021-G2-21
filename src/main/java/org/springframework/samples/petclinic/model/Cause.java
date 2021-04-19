@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -16,46 +17,58 @@ public class Cause extends NamedEntity{
 	private String organization;
 	
 	@NotNull
+	@Column(name = "closed")
 	private boolean isClosed;
 	
-	@NotBlank
+	@NotNull
 	@Min(value=0)
 	private Integer target;
 	
-	@NotBlank
+	@NotNull
 	@Min(value=0)
+	@Column(name = "donated")
 	private Integer donated;
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
 	public String getOrganization() {
-		return organization;
+		return this.organization;
 	}
 
-	public void setOrganization(String organization) {
+	public void setOrganization(final String organization) {
 		this.organization = organization;
 	}
 
 	public boolean isClosed() {
-		return isClosed;
+		return this.isClosed;
 	}
 
-	public void setClosed(boolean isClosed) {
+	public void setClosed(final boolean isClosed) {
 		this.isClosed = isClosed;
 	}
 
 	public Integer getTarget() {
-		return target;
+		return this.target;
 	}
 
-	public void setTarget(Integer target) {
+	public void setTarget(final Integer target) {
 		this.target = target;
+	}
+
+	
+	public Integer getDonated() {
+		return this.donated;
+	}
+
+	
+	public void setDonated(final Integer donated) {
+		this.donated = donated;
 	}
 
 	

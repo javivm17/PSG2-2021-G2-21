@@ -3,13 +3,17 @@ package org.springframework.samples.petclinic.model;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class Donation extends NamedEntity{
+import com.sun.istack.NotNull;
+@Entity
+@Table(name="donations")
+public class Donation extends BaseEntity{
 
 	//atributos
 	@Column(name = "donation_date")
@@ -17,7 +21,7 @@ public class Donation extends NamedEntity{
 	private LocalDate date;
 	
 	@Column(name = "amount")
-	@NotBlank
+	@NotNull
 	private Integer amount;
 	
 	
@@ -28,7 +32,7 @@ public class Donation extends NamedEntity{
 	
 	@JoinColumn(name = "owner_id")
 	@ManyToOne
-	private Owner client; //owner o user???
+	private Owner owner; //owner o user???
 
 	
 	public LocalDate getDate() {
@@ -37,7 +41,7 @@ public class Donation extends NamedEntity{
 
 	
 	public void setDate(final LocalDate date) {
-		this.date = LocalDate.now();
+		this.date = date;
 	}
 
 	
@@ -60,15 +64,20 @@ public class Donation extends NamedEntity{
 		this.cause = cause;
 	}
 
+
 	
-	public Owner getClient() {
-		return this.client;
+	public Owner getOwner() {
+		return this.owner;
+	}
+
+
+	
+	public void setOwner(final Owner owner) {
+		this.owner = owner;
 	}
 
 	
-	public void setClient(final Owner client) {
-		this.client = client;
-	}
+
 	
 	
 	
