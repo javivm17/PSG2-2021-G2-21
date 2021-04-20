@@ -80,7 +80,6 @@ public class AdoptionController {
 	public String initCreationForm(@PathVariable("id") Integer id, final Map<String, Object> model, Principal principal) {
 		Owner owner = ownerService.getOwnerByUserName(principal.getName());
 		final AdoptionApplications request = new AdoptionApplications();
-		System.out.println(id);
 		model.put("pet", petService.findPetById(id));
 		model.put("owner", owner);
 		model.put("request", request);
@@ -89,11 +88,15 @@ public class AdoptionController {
 	
 	@PostMapping(value = "/new")
 	public String processCreationForm(AdoptionApplications request) {
-			System.out.println("prueba");
-			this.adoptionService.saveRequest(request);			
-			return "redirect:/";
+		this.adoptionService.saveRequest(request);			
+		return "redirect:/adoption/requestsent";
 		
 	}
+	
+	@GetMapping(value="/requestsent")
+	public void successSentForm(AdoptionApplications request) {		
+	}
+		
 	
 	@GetMapping(value="/requests")
 	public ModelAndView getPendingRequests(Principal principal) {

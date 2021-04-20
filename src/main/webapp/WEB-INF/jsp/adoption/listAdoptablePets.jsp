@@ -12,6 +12,7 @@
         <tr>
             <th>Nombre</th>
             <th>Propietario</th>
+            <th>Tipo</th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +25,9 @@
                 	<c:forEach items="${owners}" var="owner">
                 		<c:if test="${pet.owner.id == owner.id}">${owner.firstName}&nbsp;${owner.lastName}</c:if>
                 	</c:forEach>
+                </td>
+                <td>
+                    <c:out value="${pet.type.name}"/>
                 </td>
                 <td>
     				<a href="/adoption/new/${pet.id}" class="btn btn-default">Adoptar</a>
