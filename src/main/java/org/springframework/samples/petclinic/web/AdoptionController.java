@@ -1,9 +1,9 @@
 package org.springframework.samples.petclinic.web;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -21,7 +21,10 @@ import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNam
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +33,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/adoption")
-
 public class AdoptionController {
-	private static final String VIEWS_REQUEST_CREATE_OR_UPDATE_FORM = "adoption/formAdoption";
+	private static final String VIEWS_REQUEST_CREATE_FORM = "adoption/formAdoption";
 	
 	private PetService petService;
 	
@@ -42,7 +44,10 @@ public class AdoptionController {
 	
 	private AdoptionService adoptionService;
 
-
+	@InitBinder("adoption")
+	public void initAdoptionBinder(final WebDataBinder dataBinder) {
+		dataBinder.setValidator(new AdoptionValidator());
+	}
 	
 	@Autowired
 	public AdoptionController(PetService petService,OwnerService ownerService, AdoptionRequestService adoptionRequestService, AdoptionService adoptionService) {
@@ -83,14 +88,23 @@ public class AdoptionController {
 		model.put("pet", petService.findPetById(id));
 		model.put("owner", owner);
 		model.put("request", request);
-		return AdoptionController.VIEWS_REQUEST_CREATE_OR_UPDATE_FORM;
+		return AdoptionController.VIEWS_REQUEST_CREATE_FORM;
 	}
 	
-	@PostMapping(value = "/new")
-	public String processCreationForm(AdoptionApplications request) {
-		this.adoptionService.saveRequest(request);			
-		return "redirect:/adoption/requestsent";
-		
+	@PostMapping(value = "/new/{id}")
+	public String processCreationForm(@PathVariable("id") Integer id, @Valid AdoptionApplications adoption, BindingResult result, final ModelMap model, Principal principal) {
+		if (result.hasErrors()) {
+			Owner owner = ownerService.getOwnerByUserName(principal.getName());
+			model.put("pet", petService.findPetById(id));
+			model.put("owner", owner);
+			model.put("request", adoption);
+			return AdoptionController.VIEWS_REQUEST_CREATE_FORM;
+		}
+		else {
+             this.adoptionService.saveRequest(adoption);                    
+             return "redirect:/adoption/requestsent";              
+			
+		}
 	}
 	
 	@GetMapping(value="/requestsent")
