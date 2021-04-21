@@ -12,5 +12,8 @@ public interface BookingRepository extends Repository<Booking, Integer> {
 	
 	void deleteById(int id) throws DataAccessException;
 	
-	List<Booking>findAll();
+	List<Booking> findAll();
+		
+	List<Booking> findBookingsByPetId(Integer petId);
+    	
 }

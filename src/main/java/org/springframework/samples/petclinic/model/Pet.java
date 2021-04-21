@@ -108,15 +108,27 @@ public class Pet extends NamedEntity {
 		getVisitsInternal().add(visit);
 		visit.setPet(this);
 	}
-
-	public Set<Booking> getBookings() {
-		return bookings;
-	}
-
-	public void setBookings(Set<Booking> bookings) {
+//Los getters y setters de booking los he cambiado para que sean iguales que los de visit que venían ya hechos (en el fondo el get y set básico 
+//son iguales simplemente el getBookings antiguo se llama getBookingsInternal para poder llamar getBookings a la que hace get de los bookings pero ordenandolos por la initial_date  
+    protected Set<Booking> getBookingsInternal() {
+        if (this.bookings == null) {
+            this.bookings = new HashSet<>();
+        }
+        return this.bookings;
+    }
+	
+    public void setBookings(Set<Booking> bookings) {
 		this.bookings = bookings;
 	}
-
+    
+	public List<Booking> getBookings() {
+        List<Booking> sortedBookings = new ArrayList<>(getBookingsInternal());
+        PropertyComparator.sort(sortedBookings, new MutableSortDefinition("initial_date", false, false));
+        return Collections.unmodifiableList(sortedBookings);
+	}
 	
-	
+	public void addBooking(Booking booking) {
+		getBookingsInternal().add(booking);
+		booking.setPet(this);
+	}
 }

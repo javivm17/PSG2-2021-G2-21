@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Booking;
 import org.springframework.samples.petclinic.repository.BookingRepository;
 import org.springframework.stereotype.Service;
@@ -29,4 +30,7 @@ public class BookingService {
 		return bookingRepository.findAll();
 	}
 	
+	public List<Booking> listBookingsByPetId(int petId) throws DataAccessException{
+		return bookingRepository.findBookingsByPetId(petId);
+	}
 }
