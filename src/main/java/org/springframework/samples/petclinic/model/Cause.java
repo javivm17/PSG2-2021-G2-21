@@ -69,6 +69,8 @@ public class Cause extends NamedEntity{
 	
 	public void setDonated(final Integer donated) {
 		this.donated = donated;
+		if (this.donated >= this.target)
+			setClosed(true);
 	}
 
 	

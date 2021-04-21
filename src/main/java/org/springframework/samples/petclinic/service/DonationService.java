@@ -1,25 +1,24 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Donation;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.DonationRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DonationService {
-	//JUNTAR LOS DOS SERVICES???
-	private final DonationRepository donationRepository;
 	
-	//private final CauseRepository causeRepository;
+	private final DonationRepository donationRepository;
 
 	@Autowired
 	public DonationService(final DonationRepository donationRepository) {
-		//this.causeRepository = causeRepository;
 		this.donationRepository = donationRepository;
 	}
 	
@@ -41,8 +40,8 @@ public class DonationService {
 		return this.donationRepository.findByCauseId(causeId);
 	}
 	
-//	public 	Owner findOwnerByDonation(final Donation donation) throws DataAccessException{
-//		return this.donationRepository.findOwnerByDonation(donation);
-//	}
+	public List<Owner> findOwners() throws DataAccessException{
+		return this.donationRepository.findOwners();
+	}
 	
 }

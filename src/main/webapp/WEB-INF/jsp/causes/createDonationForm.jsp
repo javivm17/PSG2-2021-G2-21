@@ -13,12 +13,12 @@
         <form:form modelAttribute="donation" class="form-horizontal">
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Cantidad" name="amount"/>
+                <petclinic:selectField label="Cliente" name="owner" names="${owners}" size="1"/>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="hidden" name="causeId" value="${donation.cause.id}"/>
-                    <input type="hidden" name="ownerId" value="${donation.owner.id}"/>
                     <button class="btn btn-default" type="submit">Añadir donación</button>
                 </div>
             </div>

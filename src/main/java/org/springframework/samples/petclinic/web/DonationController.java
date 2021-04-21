@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -8,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cause;
 import org.springframework.samples.petclinic.model.Donation;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.CauseService;
 import org.springframework.samples.petclinic.service.DonationService;
 import org.springframework.stereotype.Controller;
@@ -48,10 +50,13 @@ public class DonationController {
 	public Donation loadCauseWithDonation(@PathVariable("causeId") final int causeId) {
 		final Cause cause = this.causeService.findCauseById(causeId);
 		final Donation donation = new Donation();
-		//donation.setOwner(null);
-		//necesitamos sacar el owner
 		donation.setCause(cause);
 		return donation;
+	}
+	
+	@ModelAttribute("owners")
+	public List<Owner> loadOwners() {
+		return this.donationService.findOwners();
 	}
 	
 	@GetMapping(value = "/donations/new")
@@ -67,6 +72,10 @@ public class DonationController {
 		else {
 			donation.setDate(LocalDate.now());
 			this.donationService.saveDonation(donation);
+			
+			Cause cs = donation.getCause();
+			cs.setDonated(cs.getDonated() + donation.getAmount());
+			this.causeService.save(cs);
 			return "redirect:/causes/{causeId}";
 		}
 	}
@@ -75,8 +84,6 @@ public class DonationController {
 	public String showDetails(@PathVariable final int causeId, final Map<String, Object> model) {
 		model.put("donations", this.donationService.findDonationsByCauseId(causeId));
 		model.put("cause", this.causeService.findCauseById(causeId));
-		
-		//model.put("donator", this.donationService.findDonationById(donationId).getOwner());
 		return "causes/causeDetails";
 	}
 	
