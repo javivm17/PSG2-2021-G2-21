@@ -17,7 +17,6 @@ package org.springframework.samples.petclinic.service;
 
 
 
-import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -25,8 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Cause;
-import org.springframework.samples.petclinic.model.Donation;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,67 +58,54 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-class DonationServiceTests {        
-        @Autowired
-	protected DonationService donationService;
+class CauseServiceTests {        
         
         @Autowired
 	protected CauseService causeService;
         
-        @Autowired
-	protected OwnerService ownerService;
 
 	@Test
-	void shouldFindDonationWithCorrectId() {
-		final Donation don1 = this.donationService.findDonationById(1);
-		org.assertj.core.api.Assertions.assertThat(don1.getAmount()).isEqualTo(50);
-		org.assertj.core.api.Assertions.assertThat(don1.getCause().getName()).isEqualTo("Limpieza de vertido de petroleo");
+	void shouldFindCauseWithCorrectId() {
+		final Cause c1 = this.causeService.findCauseById(1);
+		org.assertj.core.api.Assertions.assertThat(c1.getOrganization()).isEqualTo("GreenPeace");
+		org.assertj.core.api.Assertions.assertThat(c1.getName()).isEqualTo("Limpieza de vertido de petroleo");
 
 	}
 
 	@Test
 	@Transactional
-	public void shouldInsertDonationIntoDatabaseAndGenerateId() {
-		final Owner owner1 = this.ownerService.findOwnerById(1);
-		final Cause c1 = this.causeService.findCauseById(1);
+	public void shouldInsertCauseIntoDatabaseAndGenerateId() {
 		
-		final Donation don = new Donation();
-		don.setAmount(11);
-		don.setCause(c1);
-		don.setOwner(owner1);
-		this.donationService.saveDonation(don);
-		org.assertj.core.api.Assertions.assertThat(don.getId()).isNotNull();
+		final Cause cause = new Cause();
+		cause.setName("prueba");
+		cause.setDescription("probando probando");
+		cause.setOrganization("XLStudios");
+		cause.setTarget(500);
+		cause.setClosed(false);
+		cause.setDonated(100);
+		this.causeService.save(cause);
+		org.assertj.core.api.Assertions.assertThat(cause.getId()).isNotNull();
+		org.assertj.core.api.Assertions.assertThat(cause.getName()).isEqualTo("prueba");
 		
 	}
 	
 	
 	@Test
-	void shouldFindDonationsByCauseId() throws Exception {
-		final Collection<Donation> donations = this.donationService.findDonationsByCauseId(3);
-		org.assertj.core.api.Assertions.assertThat(donations.size()).isEqualTo(3);
-		final Donation[] visitArr = donations.toArray(new Donation[donations.size()]);
-		org.assertj.core.api.Assertions.assertThat(visitArr[0].getAmount()).isNotNull();
-		org.assertj.core.api.Assertions.assertThat(visitArr[0].getDate()).isNotNull();
-		org.assertj.core.api.Assertions.assertThat(visitArr[0].getId()).isEqualTo(3);
+	void shouldFindAllCauses() throws Exception {
+		final List<Cause> causes = this.causeService.findAll();
+		final int tam = causes.size();
+		org.assertj.core.api.Assertions.assertThat(tam).isEqualTo(3);
 	}
 	
 	@Test
     @Transactional
-    void shouldDeleteDonation() {
-		final Donation don = this.donationService.findDonationById(1);
-        this.donationService.deleteDonation(don);
+    void shouldDeleteCause() {
+        this.causeService.delete(1);
 
-        final Donation donDel = this.donationService.findDonationById(1);
-        org.assertj.core.api.Assertions.assertThat(donDel).isNull();
+        final Cause cDel = this.causeService.findCauseById(1);
+        org.assertj.core.api.Assertions.assertThat(cDel).isNull();
        
     }
-	
-	@Test
-	@Transactional
-	void shouldFindOwners() {
-		final List<Owner> owns= this.donationService.findOwners();
-        org.assertj.core.api.Assertions.assertThat(owns).isNotNull();
-	}
 	
  
 }
