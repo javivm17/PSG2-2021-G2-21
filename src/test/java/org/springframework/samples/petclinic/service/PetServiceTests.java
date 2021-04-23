@@ -289,19 +289,6 @@ class PetServiceTests {
 	
 	@Test
 	@Transactional
-	void shouldChangeAdoption() {
-		final Owner owner = this.ownerService.findOwnerById(2);
-		final List<Pet> petsToAdoption = owner.getPets().stream().filter(x->x.getInAdoption()==true).collect(Collectors.toList());
-		final Pet petToUpdate = petsToAdoption.get(0);
-		petsToAdoption.get(0).setInAdoption(false);
-		final List<Pet> allPets = this.petService.findAdoptablePets(99999);
-		
-		assertEquals(petToUpdate.getInAdoption(), false);
-		assertEquals(allPets.contains(petToUpdate), false);
-	}
-	
-	@Test
-	@Transactional
 	void shouldFindOwners() {
 		final List<Owner> allOwners= this.petService.findOwners();
 		assertTrue(allOwners.size() == 10);

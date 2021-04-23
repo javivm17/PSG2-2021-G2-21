@@ -112,11 +112,6 @@ public class PetService {
 		return res;
 	}
 	
-	@Transactional(rollbackFor = DuplicatedPetNameException.class)
-	public void changeAdoption(Pet pet) {
-		this.petRepository.save(pet);
-	}
-	
 	@Transactional(readOnly=true)
 	public List<Owner> findOwners(){
 		return this.petRepository.allOwners();
