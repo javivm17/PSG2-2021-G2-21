@@ -16,7 +16,6 @@ public class Cause extends NamedEntity{
 	@NotBlank
 	private String organization;
 	
-	@NotNull
 	@Column(name = "closed")
 	private boolean isClosed;
 	
@@ -24,9 +23,6 @@ public class Cause extends NamedEntity{
 	@Min(value=0)
 	private Integer target;
 	
-	@NotNull
-	@Min(value=0)
-	@Column(name = "donated")
 	private Integer donated;
 
 	public String getDescription() {
@@ -50,7 +46,9 @@ public class Cause extends NamedEntity{
 	}
 
 	public void setClosed(final boolean isClosed) {
+		System.out.println("ME CAGO EN LOS PUTOS ERRORES");
 		this.isClosed = isClosed;
+		System.out.println("ME CAGO EN LOS PUTOS ERRORES DEL COPON");
 	}
 
 	public Integer getTarget() {
@@ -70,7 +68,7 @@ public class Cause extends NamedEntity{
 	public void setDonated(final Integer donated) {
 		this.donated = donated;
 		if (this.donated >= this.target)
-			setClosed(true);
+			this.setClosed(true);
 	}
 
 	

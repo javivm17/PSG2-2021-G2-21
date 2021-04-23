@@ -34,7 +34,7 @@ public class CauseController {
 	
 	@InitBinder
 	public void setAllowedFields(final WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
+		dataBinder.setDisallowedFields("causeId");
 	}
 	
 	@GetMapping(path="/new")
@@ -45,13 +45,16 @@ public class CauseController {
 	
 	@PostMapping(value = "/save")
 	public String processCreationForm(@Valid Cause cause, BindingResult result, ModelMap model) {	
+		cause.setClosed(false);
+		cause.setDonated(0);
 		if (result.hasErrors()) {
 			model.addAttribute("cause", cause);
+			System.out.println("ERRORES: " + result.getAllErrors());
 			return "causes/causeNew";
 		}
 		else {
 			this.causeService.save(cause);
-			return showCauseList(model);
+			return "redirect:/causes";
 		}
 	}
 	

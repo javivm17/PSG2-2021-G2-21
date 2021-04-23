@@ -16,9 +16,6 @@
 				<petclinic:inputField label="Descripción" name="description"/>
 				<petclinic:inputField label="Organización benéfica" name="organization"/>
 				<petclinic:inputField label="Cantidad objetivo" name="target"/>
-				
-				<input type="hidden" name="donated" value="0"/>
-				<input type="hidden" name="closed" value="FALSE"/>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
