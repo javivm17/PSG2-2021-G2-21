@@ -1,15 +1,21 @@
 package org.springframework.samples.petclinic.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.LocalDate;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Booking;
 import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
-import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
@@ -55,13 +61,19 @@ public class BookingServiceTests {
 	}
 	
 	@Test
-	void shouldBeOverlapped() {
+	void shouldBeOverlapped() throws DataAccessException, DuplicatedPetNameException {
 		Pet p = petService.findPetById(1);
 		Booking b = new Booking();
 		b.setInitialDate(LocalDate.of(2021, 1, 23));
 		b.setEndDate(LocalDate.of(2021, 9, 21));
 		b.setPet(p);
-		bookingService.saveBooking(b);
+		Booking book =bookingService.saveBooking(b);
+		Set<Booking>bookingList= p.getBookings();
+		bookingList.add(book);
+		p.setBookings(bookingList);
+		petService.savePet(p);
+
+		
 		
 //		(AantesdeC || AigualC) &&	BdespuesdeC 
 		Booking b2 = new Booking();
@@ -89,11 +101,34 @@ public class BookingServiceTests {
 		boolean caso3 = bookingService.isOverlapped(b4);
 		boolean caso4 = bookingService.isOverlapped(b5);
 		
-		assertThat(caso1==true);
-		assertThat(caso2==true);
-		assertThat(caso3==true);
-		assertThat(caso4==true);
+		assertTrue(caso1);
+		assertTrue(caso2);
+		assertTrue(caso3);
+		assertTrue(caso4);
 	}
 	
+	@Test
+	void shouldNotBeOverlapped() throws DataAccessException, DuplicatedPetNameException {
+		Pet p = petService.findPetById(1);
+		Booking b = new Booking();
+		b.setInitialDate(LocalDate.of(2022, 1, 23));
+		b.setEndDate(LocalDate.of(2022, 9, 21));
+		b.setPet(p);
+		Booking book =bookingService.saveBooking(b);
+		Set<Booking>bookingList= p.getBookings();
+		bookingList.add(book);
+		p.setBookings(bookingList);
+		petService.savePet(p);
+
+		Booking b2 = new Booking();
+		b2.setInitialDate(LocalDate.of(2022, 10, 23));
+		b2.setEndDate(LocalDate.of(2022, 11, 22));
+		b2.setPet(p);
+		
+		boolean caso = bookingService.isOverlapped(b2);
+		assertFalse(caso);
+
+		
+	}
 	
 }
