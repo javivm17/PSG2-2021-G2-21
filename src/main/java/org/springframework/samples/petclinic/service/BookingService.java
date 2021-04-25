@@ -37,7 +37,6 @@ public class BookingService {
 	}
 
 	public boolean isOverlapped(Booking booking) {
-
 		List<Booking> hotels = listBookingsByPetId(booking.getPet().getId());
     	if (!(booking.getInitialDate() == null || booking.getEndDate() == null)) {
     		for(int i=0;i<hotels.size();i++) {

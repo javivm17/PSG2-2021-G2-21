@@ -54,6 +54,46 @@ public class BookingServiceTests {
 		assertThat(cont2<cont1);
 	}
 	
+	@Test
+	void shouldBeOverlapped() {
+		Pet p = petService.findPetById(1);
+		Booking b = new Booking();
+		b.setInitialDate(LocalDate.of(2021, 1, 23));
+		b.setEndDate(LocalDate.of(2021, 9, 21));
+		b.setPet(p);
+		bookingService.saveBooking(b);
+		
+//		(AantesdeC || AigualC) &&	BdespuesdeC 
+		Booking b2 = new Booking();
+		b2.setInitialDate(LocalDate.of(2021, 1, 23));
+		b2.setEndDate(LocalDate.of(2021, 9, 22));
+		b2.setPet(p);
+//		AantesdeD && (BdespuesdeD || BigualD)
+		Booking b3 = new Booking();
+		b3.setInitialDate(LocalDate.of(2021, 1, 23));
+		b3.setEndDate(LocalDate.of(2021, 1, 24));
+		b3.setPet(p);
+//		AigualC && BigualD 
+		Booking b4 = new Booking();
+		b4.setInitialDate(LocalDate.of(2021, 1, 23));
+		b4.setEndDate(LocalDate.of(2021, 9, 21));
+		b4.setPet(p);
+//		AdespuesdeC && BantesdeD
+		Booking b5 = new Booking();
+		b5.setInitialDate(LocalDate.of(2021, 1, 22));
+		b5.setEndDate(LocalDate.of(2021, 9, 20));
+		b5.setPet(p);
+		
+		boolean caso1 = bookingService.isOverlapped(b2);
+		boolean caso2 = bookingService.isOverlapped(b3);
+		boolean caso3 = bookingService.isOverlapped(b4);
+		boolean caso4 = bookingService.isOverlapped(b5);
+		
+		assertThat(caso1==true);
+		assertThat(caso2==true);
+		assertThat(caso3==true);
+		assertThat(caso4==true);
+	}
 	
 	
 }
