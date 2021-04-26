@@ -88,14 +88,15 @@ public class AdoptionController {
 	
 	@PostMapping(value = "/new/{id}")
 	public String processCreationForm(@PathVariable("id") Integer id, @Valid Adoption AdoptionApplications, BindingResult result, final ModelMap model, Principal principal) {
+		Owner owner = ownerService.getOwnerByUserName(principal.getName());
 		if (result.hasErrors()) {
-			Owner owner = ownerService.getOwnerByUserName(principal.getName());
 			model.put("pet", petService.findPetById(id));
 			model.put("owner", owner);
 			model.put("adoption", AdoptionApplications);
 			return AdoptionController.VIEWS_REQUEST_CREATE_FORM;
 		}
 		else {
+			AdoptionApplications.setOwner(owner);
              this.adoptionService.saveRequest(AdoptionApplications);                    
              return "redirect:/adoption/requestsent";              
 			

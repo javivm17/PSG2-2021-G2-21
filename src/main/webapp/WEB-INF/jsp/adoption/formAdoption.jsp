@@ -24,7 +24,6 @@
 </table>
         <form:form modelAttribute="adoption" class="form-horizontal" action="/adoption/new/${pet.id}" method="POST">
             <input type="hidden" name="pet" value="${pet.id}"/>
-            <input type="hidden" name="owner" value="${owner.id}"/>
             <label>¿Como cuidaras la mascota?</label>
 				<petclinic:inputField label="Descripcion" name="description"/>                
             <div class="form-group">

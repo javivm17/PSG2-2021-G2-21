@@ -14,7 +14,7 @@ public class Adoption extends BaseEntity{
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     private Owner owner;
 
     @ManyToOne
