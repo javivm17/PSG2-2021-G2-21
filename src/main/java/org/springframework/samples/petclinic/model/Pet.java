@@ -112,13 +112,21 @@ public class Pet extends NamedEntity {
 		getVisitsInternal().add(visit);
 		visit.setPet(this);
 	}
+	
+	
 
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
+	}
+	
 	public Set<Booking> getBookings() {
 		return bookings;
 	}
 
-	public void setBookings(Set<Booking> bookings) {
-		this.bookings = bookings;
+	public List<Booking> getBookingsList() {
+        List<Booking> sortedBookings = new ArrayList<>(getBookings());
+        PropertyComparator.sort(sortedBookings, new MutableSortDefinition("initial_date", false, false));
+        return Collections.unmodifiableList(sortedBookings);
 	}
 	
 	public void setInAdoption(Boolean bol) {
@@ -130,6 +138,5 @@ public class Pet extends NamedEntity {
 		if(this.inAdoption == 1) return true;
 		else return false; 
 	}
-	
 	
 }
