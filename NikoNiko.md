@@ -30,7 +30,7 @@ In the retrospective meeting, the team has a discussion about those results.
 | Day 5         |    :fearful:   (I´m desperate, I need help)        |
 
 
-## Sprint Template
+## Sprint 3
 
 | Day           | Javier        | Jesús          | Ignacio        | José Antonio   | Antonio        | Antonio Manuel |
 | ------------- | ------------- | -------------  | -------------  | -------------  | -------------  | -------------  |
@@ -55,11 +55,16 @@ In the retrospective meeting, the team has a discussion about those results.
 | 02-05-2021    |       😃         |        😃       |       😃       |       😃      |       😃        |       😃        |
 | 03-05-2021    |       -        |        -       |       -       |       -      |       -        |       -        |
 | 04-05-2021    |       -        |        -       |       -       |       -      |       -        |       -        |
+
+## Sprint 4
+
+| Day           | Javier        | Jesús          | Ignacio        | José Antonio   | Antonio        | Antonio Manuel |
+| ------------- | ------------- | -------------  | -------------  | -------------  | -------------  | -------------  |
 | 05-05-2021    |       -        |        -       |       -       |       -      |       -        |       -        |
-| 06-05-2021    |       -        |        -       |       -       |       -      |       -        |       -        |
+| 06-05-2021    |       -        |        -       |       -       |       -      |       😃         |       -        |
 | 07-05-2021    |       -        |        -       |       -       |       -      |       😃       |       -        |
 | 08-05-2021    |       -        |        -       |       -       |       -      |       -        |       -        |
-| 09-05-2021    |       -        |        -       |       -       |       -      |       -        |       -        |
+| 09-05-2021    |       -        |        -       |       😃        |       -      |       -        |       -        |
 | 10-05-2021    |       -        |        -       |       -       |       -      |       -        |       -        |
 | 11-05-2021    |       -        |        -       |       -       |       -      |       -        |       -        |
 | 12-05-2021    |       -        |        -       |       -       |       -      |       -        |       -        |
