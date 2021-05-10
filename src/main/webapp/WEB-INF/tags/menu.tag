@@ -32,7 +32,7 @@
 					<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
 						title="buscar dueños">
 						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-						<span>Buscar due�os</span>
+						<span>Buscar dueños</span>
 					</petclinic:menuItem>
 				</sec:authorize>
 				
@@ -79,7 +79,7 @@
 
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Iniciar sesi�n</a></li>
+					<li><a href="<c:url value="/login" />">Iniciar sesión</a></li>
 					<li><a href="<c:url value="/users/new" />">Registro</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
@@ -103,7 +103,7 @@
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"
-													class="btn btn-primary btn-block btn-sm">Cerrar sesi�n</a>
+													class="btn btn-primary btn-block btn-sm">Cerrar sesión</a>
 											</p>
 										</div>
 									</div>
